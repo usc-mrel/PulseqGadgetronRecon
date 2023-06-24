@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <version>2</version>
+
+    <readers>
+        <reader>
+            <dll>gadgetron_mricore</dll>
+            <classname>GadgetIsmrmrdAcquisitionMessageReader</classname>
+        </reader>
+        <reader>
+            <dll>gadgetron_mricore</dll>
+            <classname>GadgetIsmrmrdWaveformMessageReader</classname>
+        </reader>
+    </readers>
+    <writers>
+        <writer>
+            <dll>gadgetron_mricore</dll>
+            <classname>MRIImageWriter</classname>
+        </writer>
+    </writers>
+
+    <stream>
+
+        <gadget>
+        <name>NoiseAdjust</name>
+        <dll>gadgetron_mricore</dll>
+        <classname>NoiseAdjustGadget</classname>
+        </gadget>
+        <!-- <gadget>
+            <name>RemoveROOversampling</name>
+            <dll>gadgetron_mricore</dll>
+            <classname>RemoveROOversamplingGadget</classname>
+        </gadget> -->
+
+        <gadget>
+            <name>AccTrig</name>
+            <dll>gadgetron_mricore</dll>
+            <classname>AcquisitionAccumulateTriggerGadget</classname>
+            <property>
+                <name>trigger_dimension</name>
+                <value></value>
+            </property>
+            <property>
+                <name>sorting_dimension</name>
+                <value>set</value>
+            </property>
+        </gadget>
+
+        <gadget>
+            <name>Buff</name>
+            <dll>gadgetron_mricore</dll>
+            <classname>BucketToBufferGadget</classname>
+            <property>
+                <name>N_dimension</name>
+                <value>set</value>
+            </property>
+            <property>
+                <name>S_dimension</name>
+                <value></value>
+            </property>
+            <property>
+                <name>split_slices</name>
+                <value>false</value>
+            </property>
+            <property>
+                <name>ignore_seg</name>
+                <value>true</value>
+            </property>
+            <property>
+                <name>verbose</name>
+                <value>true</value>
+            </property>
+        </gadget>
+
+        <external><execute name="passthrough" target="FixHeaders" type="python"/><configuration/></external>
+        <!-- <external><connect port="18000" /><configuration /></external> -->
+        
+        <!-- Coil compression -->
+        <!-- <gadget>
+            <name>CoilCompression</name>
+            <dll>gadgetron_mricore</dll>
+            <classname>GenericReconEigenChannelGadget</classname>
+
+            <property><name>debug_folder</name><value></value></property>
+            <property><name>perform_timing</name><value>true</value></property>
+            <property><name>verbose</name><value>true</value></property>
+
+            <property><name>average_all_ref_N</name><value>false</value></property>
+            <property><name>average_all_ref_S</name><value>false</value></property>
+
+            <property><name>upstream_coil_compression</name><value>true</value></property>
+            <property><name>upstream_coil_compression_thres</name><value>0.002</value></property>
+            <property><name>upstream_coil_compression_num_modesKept</name><value>0</value></property>
+        </gadget> -->
+        <!-- <external><connect port="18000" /><configuration /></external> -->
+
+
+        <!-- <gadget>
+            <name>SimpleRecon</name>
+            <dll>gadgetron_mricore</dll>
+            <classname>SimpleReconGadget</classname>
+        </gadget> -->
+
+
+        <gadget>
+          <name>Recon</name>
+          <dll>gadgetron_mricore</dll>
+          <classname>GenericReconCartesianFFTGadget</classname>
+
+        <property><name>image_series</name><value>0</value></property>
+
+        <property><name>coil_map_algorithm</name><value>Inati</value></property>
+
+        <property><name>debug_folder</name><value></value></property>
+          <property><name>perform_timing</name><value>true</value></property>
+          <property><name>verbose</name><value>true</value></property>
+
+      </gadget>
+
+
+        <gadget>
+            <name>ImageArraySplit</name>
+            <dll>gadgetron_mricore</dll>
+            <classname>ImageArraySplitGadget</classname>
+        </gadget>
+
+        <gadget>
+            <name>Extract</name>
+            <dll>gadgetron_mricore</dll>
+            <classname>ExtractGadget</classname>
+        </gadget>
+
+        <!-- Bug in qMRLab or Gadgetron causes direct call to fail. Till then, we use passive connection -->
+<!-- 	 	<external><connect port="18000" /><configuration /></external>  -->
+        <external><execute name="t2_stimfit" type="matlab"/><configuration/></external>
+        
+        <!-- <gadget>
+          <name>AutoScale</name>
+          <dll>gadgetron_mricore</dll>
+          <classname>AutoScaleGadget</classname>
+        </gadget> -->
+
+
+        <gadget>
+          <name>FloatToShort</name>
+          <dll>gadgetron_mricore</dll>
+          <classname>FloatToUShortGadget</classname>
+        </gadget>
+
+        <gadget>
+            <name>ImageFinish</name>
+            <dll>gadgetron_mricore</dll>
+            <classname>ImageFinishGadget</classname>
+        </gadget>
+
+        <!-- <gadget>
+            <name>DicomFinish</name>
+            <dll>gadgetron_dicom</dll>
+            <classname>DicomFinishGadget</classname>
+        </gadget> -->
+    </stream>
+
+</configuration>

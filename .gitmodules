@@ -1,0 +1,6 @@
+[submodule "src/StimFit"]
+	path = src/StimFit
+	url = https://github.com/usc-mrel/StimFit.git
+[submodule "src/qMRLab"]
+	path = src/qMRLab
+	url = https://github.com/qMRLab/qMRLab
