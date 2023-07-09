@@ -131,8 +131,8 @@
         </gadget>
 
         <!-- Bug in qMRLab or Gadgetron causes direct call to fail. Till then, we use passive connection -->
-		<!-- <external><connect port="18000" /><configuration /></external> -->
-	<external><execute name="t2_mono" type="matlab"/><configuration/></external>
+		<!-- <external><connect port="18000" /><configuration algo="t2mono"/></external> -->
+	<external><execute name="t2_map" type="matlab"/><configuration algo="t2mono"//></external>
         
         <!-- <gadget>
           <name>AutoScale</name>
