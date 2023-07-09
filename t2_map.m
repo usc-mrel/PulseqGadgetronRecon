@@ -3,7 +3,6 @@ function t2_map(connection)
     tic;
     addpath(genpath('./src'))
 
-    Neco = double(connection.header.encoding.encodingLimits.set.maximum+1);
     [recon_data, D] = recv_prep_data(connection);
 
     % Parse algo from xml config
@@ -26,6 +25,9 @@ function t2_map(connection)
         seq_info.Gr                 = rfinf.Gr;
 
         FitResults = t2_stimfit_(D, seq_info);
+    else
+        warning('Wrong algo name. Exiting...');
+        return;
     end
 
     if connection.header.acquisitionSystemInformation.institutionName == "NATIONAL INSTITUTES OF HEALTH" ...
