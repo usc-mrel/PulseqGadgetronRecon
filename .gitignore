@@ -1,3 +1,6 @@
 *.asv
 __pycache__
 .vscode
+archive/
+StimFit.mat
+outputs/
