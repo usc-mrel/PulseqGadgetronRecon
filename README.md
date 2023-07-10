@@ -30,3 +30,9 @@ MRD data directory hierarchy:
 ```
 
 Input format is `./recon.sh /path/to/MRD_ROOT/measXXX[.dat] configs/PulseqXDCartesianXXX.xml`.
+
+# Notes about 2D Multi Echo T2 Mapping
+
+- `StimFit` algorithm requires information about excitation and refocusing pulses and gradients. It is read from `t2_mese_rfinfo.mat`. Pulseq MCSE sequence generation script creates this file.
+
+- Pulseq messes up the headers for 2D sequences since by default scanner thinks the sequence is 3D. This causes kz dimension to be size 2, rather than 1. `passthrough.py` python scripts corrects the data as much as it can. This is why it is only called for 2D sequences.
