@@ -131,10 +131,10 @@
         </gadget>
 
         <!-- Bug in qMRLab or Gadgetron causes direct call to fail. Till then, we use passive connection -->
-        <!-- <external><connect port="18000" /><configuration /></external>-->
+<!--         <external><connect port="18000" /><configuration b1map="auto_afi"/></external> -->
         <!-- <external><execute name="t1_vfa" type="matlab"/><configuration b1map="none"/></external> -->
-        <!-- <external><execute name="t1_vfa" type="matlab"/><configuration b1map="auto_afi"/></external> -->
         <external><execute name="t1_vfa" type="matlab"/><configuration b1map="auto_afi"/></external>
+<!--         <external><execute name="t1_vfa" type="matlab"/><configuration b1map="auto_dam"/></external> -->
         <!-- <external><execute name="t1_vfa" type="matlab"/><configuration b1map="/path/to/b1map.mat"/></external> -->
 
         <!-- <gadget>

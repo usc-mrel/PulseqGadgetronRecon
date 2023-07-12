@@ -30,13 +30,7 @@ function t2_map(connection)
         return;
     end
 
-    if connection.header.acquisitionSystemInformation.institutionName == "NATIONAL INSTITUTES OF HEALTH" ...
-        || connection.header.acquisitionSystemInformation.institutionName == "NHLBI"
-        institutionName = "NIH";
-    else
-        institutionName = connection.header.acquisitionSystemInformation.institutionName;
-    end
-    outpath = sprintf('outputs/%s/%s', institutionName, connection.header.acquisitionSystemInformation.systemModel);
+    outpath = generate_outpath(connection.header, recon_data(1).meta('patientID'));
     mkdir(outpath);
     seqname = connection.header.userParameters.userParameterString(1).value(1:end-3);
     save(sprintf('%s/%s_%s_MID%i', ...

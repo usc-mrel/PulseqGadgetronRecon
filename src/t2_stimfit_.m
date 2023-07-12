@@ -29,7 +29,7 @@ opt.esp = TE*1e-3; % [s]
 opt.etl = Neco;
 % opt.T1 = @(T2) 1;
 
-opt.debug = 1;
+opt.debug = 0;
 opt.th = 20;%0;
 opt.th_te = 2:6;
 opt.FitType = 'lsq';

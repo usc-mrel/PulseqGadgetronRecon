@@ -10,15 +10,7 @@ function t1_vfa(connection)
     b1map_param = extractBetween(xmlsp{2}, '"','"');
     b1map_param = b1map_param{1};
     
-    % Find the output dir
-    
-    if connection.header.acquisitionSystemInformation.institutionName == "NATIONAL INSTITUTES OF HEALTH" ...
-        || connection.header.acquisitionSystemInformation.institutionName == "NHLBI"
-        institutionName = "NIH";
-    else
-        institutionName = connection.header.acquisitionSystemInformation.institutionName;
-    end
-    outpath = sprintf('outputs/%s/%s', institutionName, connection.header.acquisitionSystemInformation.systemModel);
+    outpath = generate_outpath(connection.header, recon_data(1).meta('patientID'));
     %% Estimate and send the map
     
     % TODO: Get with xml config

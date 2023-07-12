@@ -20,14 +20,8 @@ echo $meas_name
 mkdir -p $meas_folder
 
 # Upload dependency measurements to the storage server
-conda run -n $condaenvname gadgetron_ismrmrd_client --verbose -p $portn -f "$meas_folder/noise/noise_${meas_name}.h5" -c default_measurement_dependencies_ismrmrd_storage.xml
-# matlab -nodisplay -batch "gadgetron.external.listen(18000, @gadgetron.quantitative.t1_vfa);" &
+gadgetron_ismrmrd_client --verbose -p $portn -f "$meas_folder/noise/noise_${meas_name}.h5" -c default_measurement_dependencies_ismrmrd_storage.xml
 
 # Run the recon
-conda run -n $condaenvname gadgetron_ismrmrd_client -p $portn -f "$meas_folder/h5/$meas_name.h5" -o "$meas_folder/recon_$meas_name.h5" -C $configfile
+gadgetron_ismrmrd_client -p $portn -f $meas_folder/h5/$meas_name.h5 -o "$meas_folder/recon_$meas_name.h5" -C $configfile
 
-if [ $? -eq 0 ]; then
-  echo "Command succeeded"
-else
-  echo "Command failed"
-fi
