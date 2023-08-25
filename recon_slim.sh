@@ -6,7 +6,6 @@ full_name=$1
 
 portn=${2:-9009}
 configfile=${3:-./configs/PulseqCartesian.xml}
-condaenvname=${4:-gadgetron}
 
 # Split the full path into filename and directory path
 meas_name=$(basename "${full_name}")
@@ -23,5 +22,14 @@ mkdir -p $meas_folder
 gadgetron_ismrmrd_client --verbose -p $portn -f "$meas_folder/noise/noise_${meas_name}.h5" -c default_measurement_dependencies_ismrmrd_storage.xml
 
 # Run the recon
-gadgetron_ismrmrd_client -p $portn -f $meas_folder/h5/$meas_name.h5 -o "$meas_folder/recon_$meas_name.h5" -C $configfile
+errormessage=$( gadgetron_ismrmrd_client -p $portn -f "$meas_folder/h5/$meas_name.h5" -o "$meas_folder/recon_$meas_name.h5" -C $configfile>&1)
 
+
+if [[ $errormessage =~ "ERROR:" ]]; then
+  echo $errormessage
+  echo "Reconstruction failed..."
+  exit -1
+else
+  echo "Reconstruction succeeded..."
+  exit 0
+fi

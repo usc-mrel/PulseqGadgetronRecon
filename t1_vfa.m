@@ -5,6 +5,17 @@ function t1_vfa(connection)
 
     [recon_data, D] = recv_prep_data(connection);
 
+    %% Ugly Free.Max fix. Can't do FoV shift, so we shift post processing.
+    if upper(connection.header.acquisitionSystemInformation.systemModel) == "MAGNETOM EMERGE-XL"
+        xshift_mm = 40; % [mm]
+        nx = connection.header.encoding.reconSpace.matrixSize.x;
+        dx = connection.header.encoding.reconSpace.fieldOfView_mm.x./nx;
+        shift_px = xshift_mm./dx;
+
+        Dk = gadgetron.lib.fft.cifft(D, 2).*exp(-2i*pi*shift_px*((-nx/2):(nx/2-1))./nx); 
+        D = abs(gadgetron.lib.fft.cfft(Dk, 2));
+    end
+    
     % Parse b1map from xml config
     xmlsp = strsplit(connection.config, 'b1map=');
     b1map_param = extractBetween(xmlsp{2}, '"','"');
@@ -15,6 +26,8 @@ function t1_vfa(connection)
     
     % TODO: Get with xml config
     FlipAngle = [1.0, 1.7627, 3.1072, 5.4772, 9.6549, 17.019, 30.0];
+%     FlipAngle = [5.4772, 9.6549, 17.019, 30.0];
+
     TR =  connection.header.sequenceParameters.TR;
 
     % Find and load B1 map
@@ -32,7 +45,7 @@ function t1_vfa(connection)
         
         mlist = dir([outpath '/*.mat']);
         
-        b1mlist = [];
+        b1mlist = {};
 
         for f_i=1:length(mlist)
             if contains(mlist(f_i).name, b1algo)
@@ -57,7 +70,7 @@ function t1_vfa(connection)
                warning('Closest MID is too far away, continuing anyways...') 
             end
             
-            b1filename = b1mlist(I,:);
+            b1filename = b1mlist{I};
             
             fprintf('Found B1 map: %s\n', b1filename)
             
@@ -76,7 +89,7 @@ function t1_vfa(connection)
         b1mat = load(b1map_param);
         B1map = imresize3(b1mat.FitResults.B1map_filtered, 2, 'method', 'linear');  
     end
-    
+    D = real(D);
     FitResults = t1vfa_qmr(D, FlipAngle, TR*1e-3, B1map);
 
     mkdir(outpath);

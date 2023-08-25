@@ -21,7 +21,7 @@ Model.Prot.VFAData.Mat = [FlipAngle' repelem(TR, length(FlipAngle))'];
 
 T1map_struct = struct();
 % VFAData.nii.gz contains [128  128    1    N] data.
-T1map_struct.VFAData=double(D);
+T1map_struct.VFAData=double(D(:,:,:,(end-length(FlipAngle)+1):end));
 % B1map.nii.gz contains [128  128] data.
 T1map_struct.B1map = B1map;
 % Mask.nii.gz contains [128  128] data.

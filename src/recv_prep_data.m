@@ -20,22 +20,17 @@ function [recon_data,D] = recv_prep_data(connection)
     minVal =  Inf;
     maxVal = -Inf;
     for eco_i=1:Neco
-        minVal = min(minVal, min(recon_data(eco_i).data, [], 'all'));
-        maxVal = max(maxVal, max(recon_data(eco_i).data, [], 'all'));
+        minVal = min(minVal, min(abs(recon_data(eco_i).data), [], 'all'));
+        maxVal = max(maxVal, max(abs(recon_data(eco_i).data), [], 'all'));
     end
 
     mScale = (2^12-1)./(maxVal-minVal);
-    for eco_i=1:Neco
-        recon_data(eco_i).data = round((recon_data(eco_i).data-minVal).*mScale);
-    end
-
     % Extract the 4D array for passing to T2 estimation.
     D = zeros([size(recon_data(1).data, [2, 3, 4]), Neco]);
     for eco_i=1:Neco
-        D(:,:,:,eco_i) = recon_data(eco_i).data;
-    end
-
-    for eco_i=1:Neco
+        D(:,:,:,eco_i) = recon_data(eco_i).data.*mScale;
+        recon_data(eco_i).data = round((abs(recon_data(eco_i).data)-minVal).*mScale);
+        recon_data(eco_i).header.data_type = gadgetron.types.Image.FLOAT;
         connection.send(recon_data(eco_i))
     end
 end

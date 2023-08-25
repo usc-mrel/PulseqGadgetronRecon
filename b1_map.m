@@ -5,6 +5,17 @@ function b1_map(connection)
 
     [recon_data, D] = recv_prep_data(connection);
     
+    %% Ugly Free.Max fix. Can't do FoV shift, so we shift post processing.
+    if upper(connection.header.acquisitionSystemInformation.systemModel) == "MAGNETOM EMERGE-XL"
+        xshift_mm = 40; % [mm]
+        nx = connection.header.encoding.reconSpace.matrixSize.x;
+        dx = connection.header.encoding.reconSpace.fieldOfView_mm.x./nx;
+        shift_px = xshift_mm./dx;
+
+        Dk = gadgetron.lib.fft.cifft(D, 2).*exp(-2i*pi*shift_px*((-nx/2):(nx/2-1))./nx); 
+        D = abs(gadgetron.lib.fft.cfft(Dk, 2));
+    end
+    
     % Parse algo from xml config
     xmlsp = strsplit(connection.config, 'algo=');
     algoname = extractBetween(xmlsp{2}, '"','"');

@@ -1,0 +1,44 @@
+octave:1> register_phantom2d_dr
+prefix = /home/gimbutas/Telework/rrsg2020/osfstorage/challenge_submissions/
+filename = 3T/NIST_phantom/20200124_siyuanhu_casewestern_NIST/raw/Research_t1_challenge_phantom_20200124_003_SEIR_TI400.IMA
+
+filename = /home/gimbutas/Telework/rrsg2020/osfstorage/challenge_submissions/3T/NIST_phantom/20200124_siyuanhu_casewestern_NIST/raw/Research_t1_challenge_phantom_20200124_003_SEIR_TI400.IMA
+
+dx = -10
+dy =  2
+phi_degrees =  31
+roi_centers =
+
+    75.388   104.327
+    68.420   134.421
+    80.408   162.626
+   106.466   178.225
+   136.856   175.447
+   159.829   154.843
+   166.388   124.896
+   154.377    96.447
+   128.360    81.016
+    97.862    85.017
+   110.365   102.345
+    90.634   136.646
+   124.447   156.914
+   144.426   122.427
+
+roi_radii =
+
+   8.9777
+   9.2418
+   9.6218
+   9.0800
+   9.0019
+   9.1117
+   9.0882
+   8.9351
+   9.0411
+   9.0022
+   8.9817
+   8.7818
+   8.8411
+   8.8430
+
+

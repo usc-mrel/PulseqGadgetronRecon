@@ -25,7 +25,7 @@ b1_data.SF2alpha = double(D(:,:,:,2));
 % B1map.nii.gz contains [128  128] data.
 % Mask.nii.gz contains [128  128] data.
 % T1map_struct.Mask=double(sum(T1map_struct.VFAData, 4) > 1e-4).*union_mask;
-b1_data.Mask = D(:,:,:,end) > 100;
+b1_data.Mask = sum(D, 4) > 40;
 
 FitResults = FitData(b1_data,Model,0);
 
