@@ -130,9 +130,9 @@
             <classname>ExtractGadget</classname>
         </gadget>
 
-        <!-- Bug in qMRLab or Gadgetron causes direct call to fail. Till then, we use passive connection -->
-		<!-- <external><connect port="18000" /><configuration test="10"/></external> -->
-	<external><execute name="b1_map" type="matlab"/><configuration algo="dam"/></external>
+        <!-- Bug in Gadgetron or Matlab randomly causes direct call to fail. Till then, we use passive connection -->
+		 <external><connect port="18002" /><configuration algo="dam"/></external>
+        <!--<external><execute name="b1_map" type="matlab"/><configuration algo="dam"/></external> -->
         
         <!-- <gadget>
           <name>AutoScale</name>

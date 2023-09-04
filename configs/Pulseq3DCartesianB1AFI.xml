@@ -131,8 +131,8 @@
         </gadget>
 
         <!-- Bug in qMRLab or Gadgetron causes direct call to fail. Till then, we use passive connection -->
-		<!-- <external><connect port="18000" /><configuration algo="afi"/></external> -->
-	<external><execute name="b1_map" type="matlab"/><configuration algo="afi"/></external>
+		<external><connect port="18002" /><configuration algo="afi"/></external>
+        <!-- <external><execute name="b1_map" type="matlab"/><configuration algo="afi"/></external> -->
         
         <!-- <gadget>
           <name>AutoScale</name>

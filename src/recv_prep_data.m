@@ -12,6 +12,7 @@ function [recon_data,D] = recv_prep_data(connection)
         recon_data = [];
         for eco_i=1:Neco
             recon_data = [recon_data connection.next()];
+
         end
     end
 

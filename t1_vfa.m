@@ -26,7 +26,8 @@ function t1_vfa(connection)
     
     % TODO: Get with xml config
     FlipAngle = [1.0, 1.7627, 3.1072, 5.4772, 9.6549, 17.019, 30.0];
-%     FlipAngle = [5.4772, 9.6549, 17.019, 30.0];
+%     FlipAngle = [9.6549, 17.019, 30.0];
+%     FlipAngle = [30.0];
 
     TR =  connection.header.sequenceParameters.TR;
 

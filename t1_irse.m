@@ -23,6 +23,8 @@ function t1_irse(connection)
     %% Estimate and send the map
 
     TI = [50, 100, 200, 400, 800, 1600, 4500]; % [ms]
+%     TI = [50]; % [ms]
+
     FitResults = t1irse_qmr(D, TI, connection.header.sequenceParameters.TR);
 
 

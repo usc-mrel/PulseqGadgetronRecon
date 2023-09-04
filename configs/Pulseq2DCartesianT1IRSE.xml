@@ -131,8 +131,8 @@
         </gadget>
 
         <!-- Bug in qMRLab or Gadgetron causes direct call to fail. Till then, we use passive connection -->
- 	 	<!--<external><connect port="18000" /><configuration algo="t1irse"/></external>-->
-        <external><execute name="t1_irse" type="matlab"/><configuration algo="t1irse"/></external>
+ 	 	<external><connect port="18003" /><configuration algo="t1irse"/></external>
+        <!--<external><execute name="t1_irse" type="matlab"/><configuration algo="t1irse"/></external>-->
         
         <!-- <gadget>
           <name>AutoScale</name>
